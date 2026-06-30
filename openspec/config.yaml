@@ -1,0 +1,36 @@
+schema: spec-driven
+
+# Session preflight (interactive session, 2026-06-30)
+pace: interactive
+artifact_store: both
+pr_strategy: force-chained
+review_budget: 400
+
+context: |
+  Stack: Static HTML/CSS/vanilla JS (no framework, no build step, no package.json).
+  Arch: Single-page app (index.html) with sections — top-bar, main-nav, rewards, hero, promos, menu, cta-strip, footer.
+  Lang: Spanish (es) default. No backend yet.
+  Upcoming: cart-checkout (Node + Express + SQLite + wa.me handoff) — unscheduled, to be bootstrapped via sdd-ff/sdd-new.
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+  specs:
+    - Use Given/When/Then for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group by phase, use hierarchical numbering
+    - Keep tasks completable in one session
+  apply:
+    - Follow existing code patterns (vanilla JS, BEM-like CSS, CSS variables)
+    tdd: false
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: ""
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas
