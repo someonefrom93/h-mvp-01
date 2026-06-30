@@ -27,11 +27,11 @@
 
       <div class="top-bar__actions">
         <a class="btn btn--signup" href="#signup">Inscríbete</a>
-        <a class="btn btn--cart" href="#cart" aria-label="Carrito, total 0 pesos">
+        <a class="btn btn--cart" href="#cart" aria-label="Carrito">
           <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor">
             <path d="M7 4h-2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h11v-2H10.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.49L22.79 8H8.53L7.27 5.59C7.04 5.13 6.57 4.84 6.06 4.84H7zM10 20a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
           </svg>
-          <span>$0.00</span>
+          <span class="cart-badge" aria-live="polite" aria-label="Artículos en carrito">0</span>
         </a>
       </div>
     </div>
@@ -359,7 +359,7 @@
     <div class="menu__grid">
 
       <!-- ===== HAMBURGUESAS ===== -->
-      <article class="card" data-category="hamburguesas">
+      <article class="card" data-category="hamburguesas" data-product-id="whopper">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="WHOPPER">
             <rect width="600" height="300" fill="#FAF4E6"/>
@@ -380,10 +380,11 @@
           <h3 class="card__title">WHOPPER®</h3>
           <p class="card__text">Carne de res a la parrilla con lechuga fresca, tomate, cebolla y pepinillos en pan suave con ajonjolí.</p>
           <span class="card__price">$119</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="hamburguesas">
+      <article class="card" data-category="hamburguesas" data-product-id="big-king">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Big King">
             <rect width="600" height="300" fill="#FFF6E6"/>
@@ -404,10 +405,11 @@
           <h3 class="card__title">Big King</h3>
           <p class="card__text">Dos carnes a la parrilla con doble queso, lechuga, cebolla y salsa especial Big King.</p>
           <span class="card__price">$129</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="hamburguesas">
+      <article class="card" data-category="hamburguesas" data-product-id="hamburguesa-bbq">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Hamburguesa BBQ">
             <rect width="600" height="300" fill="#FDF0D5"/>
@@ -428,10 +430,11 @@
           <h3 class="card__title">Hamburguesa BBQ</h3>
           <p class="card__text">Carne a la parrilla con salsa BBQ ahumada, aros de cebolla crujientes y queso cheddar.</p>
           <span class="card__price">$109</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="hamburguesas">
+      <article class="card" data-category="hamburguesas" data-product-id="doble-queso">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Doble Queso">
             <rect width="600" height="300" fill="#FAF4E6"/>
@@ -451,11 +454,12 @@
           <h3 class="card__title">Doble Queso</h3>
           <p class="card__text">Dos carnes a la parrilla con doble queso americano, mostaza y kétchup en pan suave.</p>
           <span class="card__price">$89</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
       <!-- ===== POLLO ===== -->
-      <article class="card" data-category="pollo">
+      <article class="card" data-category="pollo" data-product-id="pollo-crujiente">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Pollo Crujiente">
             <rect width="600" height="300" fill="#FFF6E6"/>
@@ -474,10 +478,11 @@
           <h3 class="card__title">Pollo Crujiente</h3>
           <p class="card__text">Filete de pollo crujiente empanizado con lechuga fresca y mayonesa cremosa.</p>
           <span class="card__price">$99</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="pollo">
+      <article class="card" data-category="pollo" data-product-id="nuggets-6">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Nuggets">
             <rect width="600" height="300" fill="#FAF4E6"/>
@@ -495,10 +500,11 @@
           <h3 class="card__title">Nuggets (6 piezas)</h3>
           <p class="card__text">Seis nuggets de pollo 100% pechuga, doraditos por fuera y jugosos por dentro.</p>
           <span class="card__price">$69</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="pollo">
+      <article class="card" data-category="pollo" data-product-id="pollo-bbq">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Pollo BBQ">
             <rect width="600" height="300" fill="#FDF0D5"/>
@@ -517,11 +523,12 @@
           <h3 class="card__title">Pollo BBQ</h3>
           <p class="card__text">Filete de pollo empanizado con salsa BBQ dulce y ahumada, lechuga y cebolla crujiente.</p>
           <span class="card__price">$109</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
       <!-- ===== ACOMPAÑAMIENTOS ===== -->
-      <article class="card" data-category="acompanamientos">
+      <article class="card" data-category="acompanamientos" data-product-id="papas-francesa">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Papas a la Francesa">
             <rect width="600" height="300" fill="#FAF4E6"/>
@@ -541,10 +548,11 @@
           <h3 class="card__title">Papas a la Francesa</h3>
           <p class="card__text">Papas doradas y crujientes, cortadas a mano, con el sazón inconfundible de BK. Tamaño mediano.</p>
           <span class="card__price">$49</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="acompanamientos">
+      <article class="card" data-category="acompanamientos" data-product-id="onion-rings">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Onion Rings">
             <rect width="600" height="300" fill="#FDF0D5"/>
@@ -560,10 +568,11 @@
           <h3 class="card__title">Onion Rings</h3>
           <p class="card__text">Aros de cebolla empanizados y crujientes, dorados a la perfección. Ideales para compartir.</p>
           <span class="card__price">$55</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="acompanamientos">
+      <article class="card" data-category="acompanamientos" data-product-id="papas-supreme">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Papas Supreme">
             <rect width="600" height="300" fill="#FAF4E6"/>
@@ -584,10 +593,11 @@
           <h3 class="card__title">Papas Supreme</h3>
           <p class="card__text">Papas a la francesa bañadas en queso cheddar, tocino y cebollín. Una explosión de sabor.</p>
           <span class="card__price">$69</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="acompanamientos">
+      <article class="card" data-category="acompanamientos" data-product-id="ensalada-fresca">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Ensalada Fresca">
             <rect width="600" height="300" fill="#FFF6E6"/>
@@ -604,11 +614,12 @@
           <h3 class="card__title">Ensalada Fresca</h3>
           <p class="card__text">Mezcla de lechugas frescas con tomate cherry, zanahoria y aderezo ranch ligero.</p>
           <span class="card__price">$59</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
       <!-- ===== BEBIDAS ===== -->
-      <article class="card" data-category="bebidas">
+      <article class="card" data-category="bebidas" data-product-id="coca-cola">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Coca-Cola">
             <rect width="600" height="300" fill="#FAF4E6"/>
@@ -624,10 +635,11 @@
           <h3 class="card__title">Coca-Cola</h3>
           <p class="card__text">Refrescante Coca-Cola bien fría con hielo. Tamaño mediano. El complemento perfecto.</p>
           <span class="card__price">$35</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="bebidas">
+      <article class="card" data-category="bebidas" data-product-id="limonada-natural">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Limonada">
             <rect width="600" height="300" fill="#FFF6E6"/>
@@ -642,10 +654,11 @@
           <h3 class="card__title">Limonada Natural</h3>
           <p class="card__text">Limonada recién preparada con jugo de limón natural y un toque de menta. Refrescante y sin igual.</p>
           <span class="card__price">$39</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="bebidas">
+      <article class="card" data-category="bebidas" data-product-id="malteada-chocolate">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Malteada de Chocolate">
             <rect width="600" height="300" fill="#FAF4E6"/>
@@ -661,11 +674,12 @@
           <h3 class="card__title">Malteada de Chocolate</h3>
           <p class="card__text">Crema batida con salsa de chocolate y helado de vainilla. El antojo dulce definitivo.</p>
           <span class="card__price">$59</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
       <!-- ===== POSTRES ===== -->
-      <article class="card" data-category="postres">
+      <article class="card" data-category="postres" data-product-id="sundae-chocolate">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Sundae de Chocolate">
             <rect width="600" height="300" fill="#FFF6E6"/>
@@ -680,10 +694,11 @@
           <h3 class="card__title">Sundae de Chocolate</h3>
           <p class="card__text">Helado suave de vainilla con salsa de chocolate caliente. Un clásico que nunca falla.</p>
           <span class="card__price">$45</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="postres">
+      <article class="card" data-category="postres" data-product-id="pie-de-manzana">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Pie de Manzana">
             <rect width="600" height="300" fill="#FAF4E6"/>
@@ -703,10 +718,11 @@
           <h3 class="card__title">Pie de Manzana</h3>
           <p class="card__text">Pie de manzana recién horneado, crujiente por fuera y suave por dentro. Dulzura en cada bocado.</p>
           <span class="card__price">$39</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 
-      <article class="card" data-category="postres">
+      <article class="card" data-category="postres" data-product-id="cono-de-nieve">
         <div class="card__media" aria-hidden="true">
           <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Cono de Nieve">
             <rect width="600" height="300" fill="#FDF0D5"/>
@@ -722,6 +738,7 @@
           <h3 class="card__title">Cono de Nieve</h3>
           <p class="card__text">Helado suave de vainilla servido en cono. Un clásico refrescante para cualquier momento.</p>
           <span class="card__price">$29</span>
+          <button type="button" class="card__add">Agregar al carrito</button>
         </div>
       </article>
 

@@ -70,17 +70,144 @@
     });
   });
 
-  // ----- Tiny cart counter helper (so the demo doesn't feel static) -----
-  const cartCount = $('.btn--cart span');
-  if (cartCount) {
-    let value = 0.0;
-    cartCount.closest('a').addEventListener('click', (e) => {
-      e.preventDefault();
-      // simulate a 39 peso snack add
-      value = +(value + 39).toFixed(2);
-      cartCount.textContent = `$${value.toFixed(2)}`;
+  // ----- Cart store -----
+  // (demo counter removed — replaced by CartStore)
+
+  // Static product catalogue — mirrors the 17 menu cards in index.html
+  const DATA_PRODUCTS = [
+    { id: 'whopper',            name: 'WHOPPER®',            unit_price: 119, category: 'hamburguesas' },
+    { id: 'big-king',           name: 'Big King',            unit_price: 129, category: 'hamburguesas' },
+    { id: 'hamburguesa-bbq',    name: 'Hamburguesa BBQ',     unit_price: 109, category: 'hamburguesas' },
+    { id: 'doble-queso',        name: 'Doble Queso',         unit_price:  89, category: 'hamburguesas' },
+    { id: 'pollo-crujiente',    name: 'Pollo Crujiente',     unit_price:  99, category: 'pollo' },
+    { id: 'nuggets-6',          name: 'Nuggets (6 piezas)',  unit_price:  69, category: 'pollo' },
+    { id: 'pollo-bbq',          name: 'Pollo BBQ',           unit_price: 109, category: 'pollo' },
+    { id: 'papas-francesa',     name: 'Papas a la Francesa', unit_price:  49, category: 'acompanamientos' },
+    { id: 'onion-rings',        name: 'Onion Rings',         unit_price:  55, category: 'acompanamientos' },
+    { id: 'papas-supreme',      name: 'Papas Supreme',        unit_price:  69, category: 'acompanamientos' },
+    { id: 'ensalada-fresca',    name: 'Ensalada Fresca',     unit_price:  59, category: 'acompanamientos' },
+    { id: 'coca-cola',          name: 'Coca-Cola',           unit_price:  35, category: 'bebidas' },
+    { id: 'limonada-natural',    name: 'Limonada Natural',    unit_price:  39, category: 'bebidas' },
+    { id: 'malteada-chocolate', name: 'Malteada de Chocolate', unit_price: 59, category: 'bebidas' },
+    { id: 'sundae-chocolate',   name: 'Sundae de Chocolate', unit_price:  45, category: 'postres' },
+    { id: 'pie-de-manzana',     name: 'Pie de Manzana',      unit_price:  39, category: 'postres' },
+    { id: 'cono-de-nieve',      name: 'Cono de Nieve',       unit_price:  29, category: 'postres' },
+  ];
+
+  // CartStore factory — factored out so tests can inject memoryStorage / mock bus
+  function createCartStore({ storage, bus }) {
+    const STORAGE_KEY = 'burger_cart_v1';
+    let items = [];
+
+    function load() {
+      try {
+        const raw = storage.getItem(STORAGE_KEY);
+        if (!raw) return [];
+        const data = JSON.parse(raw);
+        if (data?.version !== 1 || !Array.isArray(data.items)) return [];
+        return data.items;
+      } catch {
+        return [];
+      }
+    }
+
+    function save() {
+      storage.setItem(STORAGE_KEY, JSON.stringify({ version: 1, items }));
+    }
+
+    function emit() {
+      subscribers.forEach(fn => fn(getItems()));
+    }
+
+    const subscribers = new Set();
+
+    function getItems() {
+      return items.slice();
+    }
+
+    function subtotal() {
+      return items.reduce((s, i) => s + i.unit_price * i.quantity, 0);
+    }
+
+    function count() {
+      return items.reduce((n, i) => n + i.quantity, 0);
+    }
+
+    function add(product) {
+      const existing = items.find(i => i.id === product.id);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        items.push({ id: product.id, name: product.name, unit_price: product.unit_price, category: product.category, quantity: 1 });
+      }
+      save();
+      emit();
+    }
+
+    function remove(productId) {
+      const idx = items.findIndex(i => i.id === productId);
+      if (idx !== -1) items.splice(idx, 1);
+      save();
+      emit();
+    }
+
+    function setQty(productId, qty) {
+      if (qty <= 0) { remove(productId); return; }
+      const item = items.find(i => i.id === productId);
+      if (item) { item.quantity = qty; save(); emit(); }
+    }
+
+    function clear() {
+      items = [];
+      save();
+      emit();
+    }
+
+    // Restore state from storage on creation
+    items = load();
+
+    // Cross-tab sync: reload from storage when another tab writes
+    bus.addEventListener('storage', (e) => {
+      if (e.key === STORAGE_KEY) {
+        items = load();
+        emit();
+      }
     });
+
+    return { add, remove, setQty, clear, getItems, subtotal, count, subscribe: (fn) => { subscribers.add(fn); return () => subscribers.delete(fn); } };
   }
+
+  // Singleton cart store — uses real localStorage and window
+  const CartStore = createCartStore({ storage: localStorage, bus: window });
+
+  // Wire nav badge to CartStore
+  const cartBadge = $('.cart-badge');
+  if (cartBadge) {
+    function updateBadge(items) {
+      const n = items.reduce((sum, i) => sum + i.quantity, 0);
+      cartBadge.textContent = String(n);
+      cartBadge.classList.toggle('is-visible', n > 0);
+    }
+    CartStore.subscribe(updateBadge);
+    // Sync badge with current state on page load
+    updateBadge(CartStore.getItems());
+  }
+
+  // Wire "Agregar al carrito" buttons on all 17 menu cards
+  $$('.card[data-product-id]').forEach((card) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'card__add';
+    btn.textContent = 'Agregar al carrito';
+    const productId = card.dataset.productId;
+    btn.addEventListener('click', () => {
+      const product = DATA_PRODUCTS.find(p => p.id === productId);
+      if (product) CartStore.add(product);
+    });
+    // Append button after the price span inside card__body
+    const priceSpan = card.querySelector('.card__price');
+    if (priceSpan) priceSpan.after(btn);
+  });
 
   // ----- Reveal on scroll for cards -----
   const cards = $$('.card');
