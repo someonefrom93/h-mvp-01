@@ -102,4 +102,66 @@
       io.observe(card);
     });
   }
+
+  // ----- Menu tabs -----
+  const menuTabs = $$('#menu [role="tab"]');
+  if (menuTabs.length) {
+    const tablist = $('#menu [role="tablist"]');
+    const menuCards = $$('#menu .card');
+
+    const filterCards = (category) => {
+      menuCards.forEach((card) => {
+        if (card.dataset.category === category) {
+          card.classList.remove('card--hidden');
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        } else {
+          card.classList.add('card--hidden');
+        }
+      });
+    };
+
+    menuTabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        const category = tab.dataset.menuFilter;
+        menuTabs.forEach((t) => {
+          t.setAttribute('aria-selected', 'false');
+          t.classList.remove('is-active');
+        });
+        tab.setAttribute('aria-selected', 'true');
+        tab.classList.add('is-active');
+        filterCards(category);
+      });
+    });
+
+    tablist.addEventListener('keydown', (e) => {
+      const current = document.activeElement;
+      if (!current || current.getAttribute('role') !== 'tab') return;
+
+      const tabs = $$('[role="tab"]', tablist);
+      let idx = tabs.indexOf(current);
+
+      switch (e.key) {
+        case 'ArrowRight':
+          e.preventDefault();
+          idx = (idx + 1) % tabs.length;
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          idx = (idx - 1 + tabs.length) % tabs.length;
+          break;
+        case 'Home':
+          e.preventDefault();
+          idx = 0;
+          break;
+        case 'End':
+          e.preventDefault();
+          idx = tabs.length - 1;
+          break;
+        default:
+          return;
+      }
+      tabs[idx].focus();
+    });
+  }
 })();
