@@ -1,0 +1,14 @@
+{
+  "name": "clone-burgers",
+  "version": "1.0.0",
+  "description": "Burger King Mexico clone — cart & checkout flow",
+  "type": "module",
+  "devDependencies": {
+    "jsdom": "^25.0.1",
+    "vitest": "^3.2.6"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  }
+}
