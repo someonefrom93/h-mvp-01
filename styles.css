@@ -108,6 +108,21 @@ ul { list-style: none; padding: 0; margin: 0; }
 }
 .btn--cart:hover { background: #3a1f10; }
 
+.cart-badge {
+  display: none;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 10px;
+  background: var(--bk-red);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+}
+.cart-badge.is-visible { display: inline-block; }
+
 .link-arrow {
   font-weight: 700;
   font-size: 14px;
@@ -393,6 +408,25 @@ ul { list-style: none; padding: 0; margin: 0; }
   color: var(--bk-red);
   margin: 0;
 }
+.card__add {
+  width: 100%;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--bk-orange);
+  background: var(--bk-orange);
+  color: #fff;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, transform .1s ease;
+}
+.card__add:hover {
+  background: var(--bk-orange-dk);
+  border-color: var(--bk-orange-dk);
+  transform: translateY(-1px);
+}
+.card__add:active { transform: translateY(0); }
 .card--hidden { display: none; }
 
 /* ---------- Menú ---------- */
