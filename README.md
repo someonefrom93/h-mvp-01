@@ -21,6 +21,21 @@ Static HTML/CSS/JS implementation of the [Burger King México homepage](#) layou
 
 ## Run it locally
 
+### With the backend API (recommended for order flow development)
+
+```bash
+# Install server dependencies
+npm --prefix server install
+
+# Start the server (serves static files + POST /api/orders on port 3000)
+npm --prefix server run dev
+
+# Run tests
+npm --prefix server test
+```
+
+### Static-only (legacy)
+
 Any static server works. Two zero-install options:
 
 ### Option A — Python (already on most systems)
