@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Burger King® México — Saca las Mexas, más sabor con actitud</title>
+  <meta name="description" content="Las nuevas Mexas ya están en BK. Saca el sabor con dos burgers con toque picosito: Mexa Guacamole y Mexa Toreada. ¡Pídelas en tu restaurante más cercano!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Flame+Rounded:wght@400;700&family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><circle cx='32' cy='32' r='30' fill='%23F5821F'/><path d='M20 22c0-4 5-7 12-7s12 3 12 7v6c0 4-5 8-12 8s-12-4-12-8v-6z' fill='%23fff'/><path d='M20 28h24v6c0 4-5 8-12 8s-12-4-12-8v-6z' fill='%23A0321D'/></svg>" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ========== TOP UTILITY BAR ========== -->
+  <header class="top-bar" aria-label="Acciones de cuenta">
+    <div class="top-bar__inner">
+      <a class="top-bar__brand" href="#" aria-label="Burger King inicio">
+        <svg class="bk-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <circle cx="32" cy="32" r="30" fill="#F5821F"/>
+          <path d="M14 24c0-5 8-9 18-9s18 4 18 9v8c0 5-8 10-18 10s-18-5-18-10v-8z" fill="#fff"/>
+          <path d="M14 32h36v6c0 5-8 9-18 9s-18-4-18-9v-6z" fill="#502314"/>
+        </svg>
+        <span>BURGER&nbsp;KING<sup>®</sup></span>
+      </a>
+
+      <div class="top-bar__actions">
+        <a class="btn btn--signup" href="#signup">Inscríbete</a>
+        <a class="btn btn--cart" href="#cart" aria-label="Carrito, total 0 pesos">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="currentColor">
+            <path d="M7 4h-2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h11v-2H10.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.49L22.79 8H8.53L7.27 5.59C7.04 5.13 6.57 4.84 6.06 4.84H7zM10 20a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm10 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+          </svg>
+          <span>$0.00</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== MAIN NAV ========== -->
+  <nav class="main-nav" aria-label="Navegación principal">
+    <div class="main-nav__inner">
+      <button class="icon-btn main-nav__menu" aria-label="Abrir menú" aria-expanded="false" id="menuToggle">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor" aria-hidden="true">
+          <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/>
+        </svg>
+      </button>
+
+      <ul class="main-nav__links" role="menubar">
+        <li role="none"><a role="menuitem" href="#menu">Menu</a></li>
+        <li role="none"><a role="menuitem" href="#restaurantes">Restaurantes</a></li>
+        <li role="none"><a role="menuitem" href="#cupones">Cupones</a></li>
+      </ul>
+
+      <a class="main-nav__logo" href="#" aria-label="Burger King México">
+        <svg viewBox="0 0 200 90" aria-hidden="true" role="img">
+          <ellipse cx="100" cy="45" rx="88" ry="38" fill="#F5821F"/>
+          <text x="100" y="58" text-anchor="middle" font-family="'Flame Rounded', system-ui, sans-serif" font-weight="700" font-size="42" fill="#502314" letter-spacing="2">BURGER</text>
+          <text x="100" y="92" text-anchor="middle" font-family="'Flame Rounded', system-ui, sans-serif" font-weight="700" font-size="32" fill="#502314" letter-spacing="2">KING</text>
+        </svg>
+      </a>
+
+      <button class="lang-pill" aria-label="Cambiar idioma, actualmente Español">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+        </svg>
+        <span>ES</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ========== REWARDS BANNER ========== -->
+  <section class="rewards" aria-label="Programa de recompensas">
+    <div class="rewards__bg" aria-hidden="true">
+      <span class="crown crown--1">♛</span>
+      <span class="crown crown--2">♛</span>
+      <span class="crown crown--3">♛</span>
+    </div>
+    <div class="rewards__inner">
+      <div class="rewards__brand">
+        <span class="mi-bk">MiBK<sup>®</sup></span>
+      </div>
+      <div class="rewards__copy">
+        <h2>More Rewards, Every Order</h2>
+        <p>Sign up to get a free Burger, collect points with every order, and enjoy members-only rewards.</p>
+      </div>
+      <div class="rewards__cta">
+        <a class="btn btn--primary" href="#deals">Get The Best Deals Now</a>
+        <a class="link-arrow" href="#learn">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" aria-label="Promoción destacada">
+    <div class="hero__inner">
+      <div class="hero__copy">
+        <h1 class="hero__title">Saca las Mexas</h1>
+        <p class="hero__lead">
+          Llegaron dos nuevas burgers con sabor intenso, toque picosito y toda la actitud mexicana:
+          <strong>Mexa Guacamole</strong> y <strong>Mexa Toreada</strong>.
+        </p>
+        <a class="btn btn--hero" href="#mexas">
+          Descubre las nuevas Mexas
+        </a>
+      </div>
+
+      <div class="hero__art" aria-hidden="true">
+        <!-- SVG placeholder for the Saca las Mexas promo art -->
+        <svg viewBox="0 0 520 320" role="img" aria-label="Mexa Guacamole y Mexa Toreada">
+          <defs>
+            <linearGradient id="paper" x1="0" x2="0" y1="0" y2="1">
+              <stop offset="0" stop-color="#FFF6E6"/>
+              <stop offset="1" stop-color="#FCE0B0"/>
+            </linearGradient>
+            <pattern id="folk" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+              <path d="M30 5 q12 12 0 25 q-12 -13 0 -25 z" fill="#E43D2E" opacity=".55"/>
+              <circle cx="5" cy="5" r="2" fill="#0E8A4A" opacity=".55"/>
+              <circle cx="55" cy="55" r="2" fill="#0E8A4A" opacity=".55"/>
+            </pattern>
+          </defs>
+
+          <rect width="520" height="320" rx="14" fill="url(#paper)"/>
+          <rect width="520" height="320" rx="14" fill="url(#folk)"/>
+
+          <!-- left fries -->
+          <g transform="translate(35 140)">
+            <path d="M0 90 L8 0 H68 L76 90 Z" fill="#fff" stroke="#E43D2E" stroke-width="3"/>
+            <rect x="0" y="60" width="76" height="30" fill="#E43D2E"/>
+            <text x="38" y="82" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="14" fill="#fff">KING</text>
+            <g stroke="#FFC347" stroke-width="6" stroke-linecap="round">
+              <line x1="20" y1="-5" x2="14" y2="55"/>
+              <line x1="32" y1="-10" x2="28" y2="55"/>
+              <line x1="44" y1="-5" x2="42" y2="55"/>
+              <line x1="56" y1="-10" x2="56" y2="55"/>
+            </g>
+          </g>
+
+          <!-- left burger -->
+          <g transform="translate(95 115)">
+            <ellipse cx="65" cy="105" rx="70" ry="14" fill="#3a1a10"/>
+            <rect x="-5" y="60" width="140" height="40" rx="6" fill="#8a4a1a"/>
+            <rect x="-5" y="40" width="140" height="22" rx="6" fill="#caa472"/>
+            <rect x="-5" y="35" width="140" height="14" rx="4" fill="#d33b2c"/>
+            <ellipse cx="65" cy="35" rx="70" ry="14" fill="#0E8A4A"/>
+            <ellipse cx="65" cy="22" rx="68" ry="20" fill="#f5c98b"/>
+            <ellipse cx="65" cy="14" rx="65" ry="16" fill="#d68a3d"/>
+            <circle cx="35" cy="55" r="3" fill="#fff"/>
+            <circle cx="95" cy="55" r="3" fill="#fff"/>
+            <text x="65" y="105" text-anchor="middle" font-family="'Open Sans'" font-weight="700" font-size="9" fill="#fff">MEXA GUACAMOLE</text>
+          </g>
+
+          <!-- right burger -->
+          <g transform="translate(270 115)">
+            <ellipse cx="65" cy="105" rx="70" ry="14" fill="#3a1a10"/>
+            <rect x="-5" y="60" width="140" height="40" rx="6" fill="#8a4a1a"/>
+            <rect x="-5" y="40" width="140" height="22" rx="6" fill="#caa472"/>
+            <rect x="-5" y="35" width="140" height="14" rx="4" fill="#5a1812"/>
+            <ellipse cx="65" cy="35" rx="70" ry="14" fill="#f7a23a"/>
+            <ellipse cx="65" cy="22" rx="68" ry="20" fill="#f5c98b"/>
+            <text x="65" y="105" text-anchor="middle" font-family="'Open Sans'" font-weight="700" font-size="9" fill="#fff">MEXA TOREADA</text>
+          </g>
+
+          <!-- right fries -->
+          <g transform="translate(415 140)">
+            <path d="M0 90 L8 0 H68 L76 90 Z" fill="#fff" stroke="#E43D2E" stroke-width="3"/>
+            <rect x="0" y="60" width="76" height="30" fill="#E43D2E"/>
+            <text x="38" y="82" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="14" fill="#fff">KING</text>
+            <g stroke="#FFC347" stroke-width="6" stroke-linecap="round">
+              <line x1="20" y1="-5" x2="14" y2="55"/>
+              <line x1="32" y1="-10" x2="28" y2="55"/>
+              <line x1="44" y1="-5" x2="42" y2="55"/>
+              <line x1="56" y1="-10" x2="56" y2="55"/>
+            </g>
+          </g>
+
+          <!-- corner crown -->
+          <g transform="translate(280 90)">
+            <path d="M-20 0 L-10 -25 L0 -10 L10 -25 L20 0 Z" fill="#F5821F" stroke="#502314" stroke-width="2"/>
+            <circle r="3" fill="#E43D2E"/>
+          </g>
+
+          <!-- title -->
+          <text x="260" y="60" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="44" fill="#E43D2E" stroke="#502314" stroke-width="1.5">SACA LAS MEXAS</text>
+          <text x="80" y="60" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="14" fill="#502314">⚓ SACA ⚓</text>
+
+          <!-- bottom deal strip -->
+          <g transform="translate(0 250)">
+            <rect width="520" height="50" rx="0" fill="#E43D2E"/>
+            <text x="260" y="22" text-anchor="middle" font-family="'Open Sans'" font-weight="800" font-size="13" fill="#fff">Agrega un vaso botanero a cualquier combo por $59 c/u</text>
+            <text x="260" y="40" text-anchor="middle" font-family="'Open Sans'" font-weight="400" font-size="10" fill="#fffbe8">Sujeto a 1 Vaso por Combo · MX © 2026 Burger King Corporation LLC. Todos los derechos reservados.</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PROMO CARDS ========== -->
+  <section class="promos" aria-label="Más promociones">
+    <div class="promos__grid">
+
+      <article class="card">
+        <div class="card__media card__media--soccer" aria-hidden="true">
+          <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Cancha de fútbol y pelota">
+            <defs>
+              <pattern id="grass" x="0" y="0" width="40" height="20" patternUnits="userSpaceOnUse">
+                <rect width="40" height="20" fill="#0e8a4a"/>
+                <rect x="0" y="0" width="20" height="20" fill="#0d7d44"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="300" fill="url(#grass)"/>
+            <rect x="40" y="40" width="520" height="220" fill="none" stroke="#fff" stroke-width="3" opacity=".7"/>
+            <line x1="300" y1="40" x2="300" y2="260" stroke="#fff" stroke-width="2" opacity=".7"/>
+            <circle cx="300" cy="150" r="35" fill="none" stroke="#fff" stroke-width="2" opacity=".7"/>
+            <circle cx="300" cy="150" r="3" fill="#fff"/>
+            <text x="300" y="80" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="46" fill="#fff" stroke="#502314" stroke-width="2">¡Anota y gana!</text>
+            <text x="300" y="190" text-anchor="middle" font-family="'Open Sans'" font-weight="800" font-size="18" fill="#fff">Marca 11 goles o más en 30 segundos</text>
+            <text x="300" y="216" text-anchor="middle" font-family="'Open Sans'" font-weight="800" font-size="18" fill="#fff">y recibe 1000 Coronas en tu cuenta de lealtad.</text>
+            <text x="300" y="260" text-anchor="middle" font-family="'Open Sans'" font-size="9" fill="#fff" opacity=".8">TM &amp; © 2026 Burger King Company, LLC. Todos los derechos reservados. Consulta términos y condiciones en www.burgerking.com.mx</text>
+          </svg>
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Anota y gana</h3>
+          <p class="card__text">Anota 11 goles y desbloquea 1,000 Coronas para canjearlas por tus favoritos de BK.</p>
+          <a class="btn btn--outline" href="#play">¡Quiero jugar!</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card__media card__media--mexas" aria-hidden="true">
+          <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Saca las Mexas con papas y vaso botanero">
+            <defs>
+              <linearGradient id="bg2" x1="0" x2="0" y1="0" y2="1">
+                <stop offset="0" stop-color="#FFF6E6"/>
+                <stop offset="1" stop-color="#FCE0B0"/>
+              </linearGradient>
+              <pattern id="folk2" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse">
+                <path d="M30 5 q12 12 0 25 q-12 -13 0 -25 z" fill="#E43D2E" opacity=".55"/>
+                <circle cx="5" cy="5" r="2" fill="#0E8A4A" opacity=".55"/>
+                <circle cx="55" cy="55" r="2" fill="#0E8A4A" opacity=".55"/>
+              </pattern>
+            </defs>
+            <rect width="600" height="300" fill="url(#bg2)"/>
+            <rect width="600" height="300" fill="url(#folk2)"/>
+            <text x="300" y="80" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="56" fill="#E43D2E" stroke="#502314" stroke-width="1.5">SACA LAS MEXAS</text>
+
+            <g transform="translate(125 145)">
+              <ellipse cx="0" cy="100" rx="65" ry="12" fill="#3a1a10"/>
+              <rect x="-55" y="55" width="110" height="40" rx="6" fill="#8a4a1a"/>
+              <rect x="-55" y="40" width="110" height="18" rx="4" fill="#caa472"/>
+              <ellipse cx="0" cy="38" rx="60" ry="14" fill="#0E8A4A"/>
+              <ellipse cx="0" cy="22" rx="58" ry="18" fill="#f5c98b"/>
+              <text x="0" y="80" text-anchor="middle" font-family="'Open Sans'" font-weight="700" font-size="11" fill="#fff">MEXA GUACAMOLE</text>
+            </g>
+
+            <g transform="translate(395 145)">
+              <ellipse cx="0" cy="100" rx="65" ry="12" fill="#3a1a10"/>
+              <rect x="-55" y="55" width="110" height="40" rx="6" fill="#8a4a1a"/>
+              <rect x="-55" y="40" width="110" height="18" rx="4" fill="#5a1812"/>
+              <ellipse cx="0" cy="38" rx="60" ry="14" fill="#f7a23a"/>
+              <ellipse cx="0" cy="22" rx="58" ry="18" fill="#f5c98b"/>
+              <text x="0" y="80" text-anchor="middle" font-family="'Open Sans'" font-weight="700" font-size="11" fill="#fff">MEXA TOREADA</text>
+            </g>
+
+            <g transform="translate(0 220)">
+              <rect width="600" height="40" fill="#E43D2E"/>
+              <text x="300" y="18" text-anchor="middle" font-family="'Open Sans'" font-weight="800" font-size="13" fill="#fff">Agrega un vaso botanero a cualquier combo por $59 c/u</text>
+              <text x="300" y="32" text-anchor="middle" font-family="'Open Sans'" font-size="9" fill="#fffbe8">Sujeto a 1 Vaso por Combo · MX © 2026 Burger King Co., LLC.</text>
+            </g>
+          </svg>
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Saca las Mexas</h3>
+          <p class="card__text">Llegaron dos nuevas burgers con sabor intenso, toque picosito y toda la actitud mexicana: Mexa Guacamole y Mexa Toreada.</p>
+          <a class="btn btn--outline" href="#mexas">Descubre las nuevas Mexas</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card__media card__media--king" aria-hidden="true">
+          <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="King Collection">
+            <defs>
+              <linearGradient id="bgk" x1="0" x2="1"><stop offset="0" stop-color="#FFE4A8"/><stop offset="1" stop-color="#F5B341"/></linearGradient>
+            </defs>
+            <rect width="600" height="300" fill="url(#bgk)"/>
+            <g transform="translate(180 60)">
+              <path d="M0 80 L24 0 L60 60 L96 0 L120 80 Z" fill="#F5821F" stroke="#502314" stroke-width="3"/>
+              <circle cx="60" cy="36" r="6" fill="#E43D2E"/>
+            </g>
+            <text x="300" y="200" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="64" fill="#502314">King</text>
+            <text x="300" y="240" text-anchor="middle" font-family="'Open Sans'" font-weight="800" font-size="20" fill="#502314">Próximamente · Colección limitada</text>
+            <rect x="0" y="260" width="600" height="40" fill="#502314"/>
+            <text x="300" y="285" text-anchor="middle" font-family="'Open Sans'" font-size="11" fill="#fffbe8">Sigue pendiente a nuestras redes para enterarte primero.</text>
+          </svg>
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">King Collection</h3>
+          <p class="card__text">Próximamente llega una nueva colección para los fans más fieros. ¿Estás listo para coronarte?</p>
+          <a class="btn btn--outline" href="#king">Ver más</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card__media card__media--babys" aria-hidden="true">
+          <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Nuevas Baby">
+            <defs>
+              <linearGradient id="bnb" x1="0" x2="1"><stop offset="0" stop-color="#fde2cf"/><stop offset="1" stop-color="#f1b58a"/></linearGradient>
+            </defs>
+            <rect width="600" height="300" fill="url(#bnb)"/>
+            <text x="300" y="80" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="40" fill="#502314">NUEVAS</text>
+            <text x="300" y="150" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="80" fill="#E43D2E" stroke="#502314" stroke-width="2">BABY</text>
+
+            <g transform="translate(420 95)">
+              <circle r="42" fill="#F5821F"/>
+              <text x="0" y="-4" text-anchor="middle" font-family="'Open Sans'" font-weight="700" font-size="11" fill="#502314">solo</text>
+              <text x="0" y="20" text-anchor="middle" font-family="'Flame Rounded'" font-weight="700" font-size="32" fill="#502314">$129</text>
+            </g>
+
+            <rect x="0" y="260" width="600" height="40" fill="#fff"/>
+            <text x="300" y="285" text-anchor="middle" font-family="'Open Sans'" font-size="11" fill="#502314">Precio y disponibilidad pueden variar por restaurante.</text>
+          </svg>
+        </div>
+        <div class="card__body">
+          <h3 class="card__title">Nuevas Baby</h3>
+          <p class="card__text">¡Pequeñas pero poderosas! Prueba las nuevas Baby Burgers desde solo $129.</p>
+          <a class="btn btn--outline" href="#baby">Pedir ahora</a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ========== CTA STRIP ========== -->
+  <section class="cta-strip" aria-label="Llama al teléfono para pedir">
+    <div class="cta-strip__inner">
+      <div>
+        <h2>¿Antojo en este momento?</h2>
+        <p>Haz tu pedido para entrega a domicilio o recoge en tu restaurante más cercano.</p>
+      </div>
+      <a class="btn btn--primary" href="#order">Pide ahora</a>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__col">
+        <h4>Menú</h4>
+        <ul>
+          <li><a href="#">Hamburguesas</a></li>
+          <li><a href="#">Combos</a></li>
+          <li><a href="#">Para compartir</a></li>
+          <li><a href="#">Postres</a></li>
+          <li><a href="#">Bebidas</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Mi Cuenta</h4>
+        <ul>
+          <li><a href="#">Inscríbete</a></li>
+          <li><a href="#">Mis Coronas</a></li>
+          <li><a href="#">Cupones</a></li>
+          <li><a href="#">Pedidos</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Sobre BK</h4>
+        <ul>
+          <li><a href="#">Historia</a></li>
+          <li><a href="#">Responsabilidad</a></li>
+          <li><a href="#">Trabaja con nosotros</a></li>
+          <li><a href="#">Franquicias</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Ayuda</h4>
+        <ul>
+          <li><a href="#">Contacto</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+          <li><a href="#">Aviso de privacidad</a></li>
+          <li><a href="#">Política de cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__legal">
+      <small>© 2026 Burger King Corporation LLC. Todos los derechos reservados. Este sitio es un clon educativo creado con fines de demostración.</small>
+    </div>
+  </footer>
+
+  <!-- floating mobile menu drawer -->
+  <aside class="drawer" id="mobileDrawer" hidden aria-label="Menú móvil">
+    <button class="drawer__close" id="drawerClose" aria-label="Cerrar menú">×</button>
+    <ul class="drawer__list">
+      <li><a href="#">Menu</a></li>
+      <li><a href="#">Restaurantes</a></li>
+      <li><a href="#">Cupones</a></li>
+      <li><a href="#">Mi cuenta</a></li>
+      <li><a href="#">Pedir ahora</a></li>
+    </ul>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
