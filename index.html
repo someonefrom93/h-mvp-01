@@ -828,6 +828,7 @@
         <strong id="cartDrawerSubtotal">$0</strong>
       </div>
       <button class="btn btn--primary cart-drawer__cta" id="cartDrawerCheckout">Ir a pagar</button>
+      <button class="cart-drawer__clear" id="cartDrawerClear" type="button">Vaciar carrito</button>
     </footer>
   </dialog>
 
@@ -870,12 +871,12 @@
         </button>
       </form>
 
-      <div class="checkout-success" id="checkoutSuccess" hidden>
+      <div class="checkout-success" id="checkoutSuccess" hidden aria-live="polite" role="status">
         <div class="checkout-success__icon" aria-hidden="true">✓</div>
         <h3 class="checkout-success__title">¡Pedido confirmado!</h3>
         <p class="checkout-success__body">Tu pedido <strong id="checkoutOrderId"></strong> fue recibido.</p>
         <!-- PR 4 will replace the placeholder below with a real wa.me link -->
-        <p class="checkout-success__wa-placeholder">(Enviar por WhatsApp — disponible en la próxima actualización)</p>
+        <p id="checkoutSuccessWaPlaceholder" class="checkout-success__wa-placeholder">(Enviar por WhatsApp — disponible en la próxima actualización)</p>
       </div>
     </div>
   </dialog>

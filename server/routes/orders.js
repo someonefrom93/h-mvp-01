@@ -1,6 +1,8 @@
 import express from 'express';
 import { validateOrderPayload } from '../lib/validate.js';
 import { withIdempotency } from '../lib/idempotency.js';
+import { buildWaLink } from '../lib/whatsapp.js';
+import { BUSINESS_PHONE } from '../config.js';
 
 const router = express.Router();
 
@@ -18,7 +20,7 @@ const router = express.Router();
  *   Content-Type: application/json
  *   Idempotency-Key: <uuid> (optional)
  *
- * Response 201: { order_id, created_at }
+ * Response 201: { order_id, created_at, whatsapp_link }
  * Response 400: { errors: [{ field, message }] }
  * Response 500: { error: "Internal server error" }
  */
@@ -77,7 +79,15 @@ router.post('/', (req, res) => {
       return { status: 500, body: { error: 'Internal server error' } };
     }
 
-    return { status: 201, body: { order_id: orderId, created_at: createdAt } };
+    const whatsapp_link = buildWaLink({
+      orderId,
+      items,
+      customer,
+      subtotal,
+      phone: BUSINESS_PHONE,
+    });
+
+    return { status: 201, body: { order_id: orderId, created_at: createdAt, whatsapp_link } };
   });
 
   return res.status(response.status).json(response.body);

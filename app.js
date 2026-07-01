@@ -216,19 +216,13 @@
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
+          entry.target.classList.add('card--revealed');
           io.unobserve(entry.target);
         }
       });
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.1 });
 
-    cards.forEach((card) => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(16px)';
-      card.style.transition = 'opacity .55s ease, transform .55s ease';
-      io.observe(card);
-    });
+    cards.forEach((card) => io.observe(card));
   }
 
   // ----- Menu tabs -----
@@ -241,8 +235,7 @@
       menuCards.forEach((card) => {
         if (card.dataset.category === category) {
           card.classList.remove('card--hidden');
-          card.style.opacity = '1';
-          card.style.transform = 'translateY(0)';
+          card.classList.add('card--revealed');
         } else {
           card.classList.add('card--hidden');
         }
@@ -326,7 +319,12 @@
   function renderCartDrawer() {
     const items = CartStore.getItems();
     if (items.length === 0) {
-      cartDrawerBody.innerHTML = '<p class="cart-drawer__empty">Tu carrito está vacío</p>';
+      cartDrawerBody.innerHTML = `
+        <div class="cart-drawer__empty">
+          <p class="cart-drawer__empty-title">Tu carrito está vacío</p>
+          <p class="cart-drawer__empty-body">Agrega productos del menú para hacer tu pedido</p>
+        </div>
+      `;
       cartDrawerCheckout.disabled = true;
     } else {
       cartDrawerBody.innerHTML = items.map(item => `
@@ -356,6 +354,13 @@
     // Wire "Ir a pagar" → checkout modal
     cartDrawerCheckout.addEventListener('click', openCheckout);
 
+    // Wire "Vaciar carrito" with confirmation guard
+    cartDrawerClear.addEventListener('click', () => {
+      if (CartStore.count() > 0 && confirm('¿Vacuar el carrito?')) {
+        CartStore.clear();
+      }
+    });
+
     // Event delegation for quantity controls in drawer body
     cartDrawerBody.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-action]');
@@ -383,6 +388,9 @@
       openCartDrawer();
     });
   }
+
+  // Cart drawer DOM refs
+  const cartDrawerClear = $('#cartDrawerClear');
 
   // ----- Checkout modal -----
   const checkoutModal = $('#checkoutModal');
@@ -498,6 +506,17 @@
     checkoutOrderId.textContent = `#${body.order_id}`;
     CartStore.clear();
     clearDraft();
+    // PR 4: render WhatsApp CTA if the API returned a link
+    const placeholder = $('#checkoutSuccessWaPlaceholder');
+    if (placeholder && body.whatsapp_link) {
+      const waLink = document.createElement('a');
+      waLink.href = body.whatsapp_link;
+      waLink.target = '_blank';
+      waLink.rel = 'noopener noreferrer';
+      waLink.className = 'btn btn--whatsapp';
+      waLink.textContent = 'Enviar pedido por WhatsApp';
+      placeholder.replaceWith(waLink);
+    }
   }
 
   function showError(errors) {
