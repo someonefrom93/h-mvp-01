@@ -815,6 +815,22 @@
   </aside>
   <div class="scrim" id="scrim" hidden></div>
 
+  <!-- ========== CART DRAWER ========== -->
+  <dialog class="cart-drawer" id="cartDrawer" aria-label="Tu carrito">
+    <header class="cart-drawer__head">
+      <h2 class="cart-drawer__title">Tu carrito</h2>
+      <button class="cart-drawer__close" id="cartDrawerClose" aria-label="Cerrar carrito">×</button>
+    </header>
+    <div class="cart-drawer__body" id="cartDrawerBody"></div>
+    <footer class="cart-drawer__foot">
+      <div class="cart-drawer__subtotal">
+        <span>Subtotal</span>
+        <strong id="cartDrawerSubtotal">$0</strong>
+      </div>
+      <button class="btn btn--primary cart-drawer__cta" id="cartDrawerCheckout">Ir a pagar</button>
+    </footer>
+  </dialog>
+
   <script src="app.js" defer></script>
 </body>
 </html>
