@@ -353,10 +353,8 @@
     // Wire close button
     cartDrawerClose.addEventListener('click', closeCartDrawer);
 
-    // Wire "Ir a pagar" stub — PR 3 wires the real checkout
-    cartDrawerCheckout.addEventListener('click', () => {
-      console.info('[PR2b] checkout stub — PR 3 will wire this');
-    });
+    // Wire "Ir a pagar" → checkout modal
+    cartDrawerCheckout.addEventListener('click', openCheckout);
 
     // Event delegation for quantity controls in drawer body
     cartDrawerBody.addEventListener('click', (e) => {
@@ -385,6 +383,234 @@
       openCartDrawer();
     });
   }
+
+  // ----- Checkout modal -----
+  const checkoutModal = $('#checkoutModal');
+  const checkoutModalClose = $('#checkoutModalClose');
+  const checkoutSummary = $('#checkoutSummary');
+  const checkoutForm = $('#checkoutForm');
+  const coName = $('#coName');
+  const coPhone = $('#coPhone');
+  const coAddress = $('#coAddress');
+  const coNotes = $('#coNotes');
+  const coNameErr = $('#coNameErr');
+  const coPhoneErr = $('#coPhoneErr');
+  const coAddressErr = $('#coAddressErr');
+  const checkoutFormError = $('#checkoutFormError');
+  const checkoutSubmitBtn = $('#checkoutSubmitBtn');
+  const checkoutSuccess = $('#checkoutSuccess');
+  const checkoutOrderId = $('#checkoutOrderId');
+
+  const DRAFT_KEY = 'burger_checkout_draft_v1';
+
+  function readDraft() {
+    try {
+      return JSON.parse(localStorage.getItem(DRAFT_KEY)) || {};
+    } catch {
+      return {};
+    }
+  }
+
+  function writeDraft(values) {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(values));
+  }
+
+  function clearDraft() {
+    localStorage.removeItem(DRAFT_KEY);
+  }
+
+  function renderCheckoutSummary() {
+    const items = CartStore.getItems();
+    if (items.length === 0) {
+      checkoutSummary.innerHTML = '<p class="checkout-summary__empty">No hay artículos en el carrito</p>';
+      return;
+    }
+    const rows = items.map(item => `
+      <div class="checkout-summary__row">
+        <span class="checkout-summary__row-name">${escapeHtml(item.name)}</span>
+        <span class="checkout-summary__row-qty">×${item.quantity}</span>
+        <span class="checkout-summary__row-total">$${(item.unit_price * item.quantity).toFixed(0)}</span>
+      </div>
+    `).join('');
+    checkoutSummary.innerHTML = `
+      ${rows}
+      <div class="checkout-summary__subtotal">
+        <span>Subtotal</span>
+        <span>$${CartStore.subtotal().toFixed(0)}</span>
+      </div>
+    `;
+  }
+
+  function mountCheckoutForm() {
+    const draft = readDraft();
+    coName.value = draft.name || '';
+    coPhone.value = draft.phone || '';
+    coAddress.value = draft.address || '';
+    coNotes.value = draft.notes || '';
+    for (const input of [coName, coPhone, coAddress, coNotes]) {
+      input.addEventListener('input', () => {
+        writeDraft({
+          name: coName.value,
+          phone: coPhone.value,
+          address: coAddress.value,
+          notes: coNotes.value,
+        });
+      });
+    }
+  }
+
+  function validateCheckoutForm() {
+    const errors = [];
+    clearFormErrors();
+    if (!coName.value.trim()) {
+      errors.push({ field: 'customer.name', el: coNameErr, msg: 'Ingresa tu nombre' });
+    }
+    if (!coPhone.value.trim() || !/^\+?\d{10,15}$/.test(coPhone.value.trim())) {
+      errors.push({ field: 'customer.phone', el: coPhoneErr, msg: 'Ingresa un teléfono válido (10-15 dígitos)' });
+    }
+    if (!coAddress.value.trim()) {
+      errors.push({ field: 'customer.address', el: coAddressErr, msg: 'Ingresa tu dirección' });
+    }
+    return errors;
+  }
+
+  function showFieldError(err) {
+    err.el.textContent = err.msg;
+    err.el.hidden = false;
+    err.el.previousElementSibling.setAttribute('aria-invalid', 'true');
+  }
+
+  function clearFormErrors() {
+    for (const errEl of [coNameErr, coPhoneErr, coAddressErr]) {
+      errEl.hidden = true;
+      errEl.textContent = '';
+    }
+    for (const input of [coName, coPhone, coAddress]) {
+      input.removeAttribute('aria-invalid');
+    }
+    checkoutFormError.hidden = true;
+    checkoutFormError.textContent = '';
+  }
+
+  function showSuccess(body) {
+    checkoutForm.hidden = true;
+    checkoutSuccess.hidden = false;
+    checkoutOrderId.textContent = `#${body.order_id}`;
+    CartStore.clear();
+    clearDraft();
+  }
+
+  function showError(errors) {
+    if (errors && errors.length > 0) {
+      checkoutFormError.textContent = errors[0].message || 'No se pudo procesar el pedido';
+      checkoutFormError.hidden = false;
+    } else {
+      checkoutFormError.textContent = 'No se pudo procesar el pedido. Intenta de nuevo.';
+      checkoutFormError.hidden = false;
+    }
+    checkoutSubmitBtn.disabled = false;
+    checkoutForm.removeAttribute('aria-busy');
+  }
+
+  let submitState = 'idle';
+
+  async function submitOrder() {
+    if (submitState !== 'idle') return;
+    const errors = validateCheckoutForm();
+    if (errors.length > 0) {
+      errors.forEach(showFieldError);
+      return;
+    }
+    submitState = 'submitting';
+    checkoutForm.setAttribute('aria-busy', 'true');
+    checkoutSubmitBtn.disabled = true;
+    clearFormErrors();
+
+    const payload = {
+      customer: {
+        name: coName.value.trim(),
+        phone: coPhone.value.trim(),
+        address: coAddress.value.trim(),
+        notes: coNotes.value.trim(),
+      },
+      items: CartStore.getItems().map(i => ({
+        product_name: i.name,
+        unit_price: i.unit_price,
+        quantity: i.quantity,
+      })),
+      subtotal: CartStore.subtotal(),
+    };
+
+    try {
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Idempotency-Key': crypto.randomUUID(),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.status === 201) {
+        const body = await res.json();
+        submitState = 'success';
+        showSuccess(body);
+      } else {
+        submitState = 'error';
+        let errData = {};
+        try { errData = await res.json(); } catch { /* ok */ }
+        showError(errData.errors);
+        submitState = 'idle';
+      }
+    } catch (e) {
+      submitState = 'error';
+      showError([{ message: 'Sin conexión. Verifica tu red e inténtalo de nuevo.' }]);
+      submitState = 'idle';
+    }
+  }
+
+  function openCheckout() {
+    // Close cart drawer if open
+    if (cartDrawer.open) closeCartDrawer();
+    renderCheckoutSummary();
+    mountCheckoutForm();
+    // Reset success view
+    checkoutForm.hidden = false;
+    checkoutSuccess.hidden = true;
+    submitState = 'idle';
+    clearFormErrors();
+    checkoutSubmitBtn.disabled = false;
+    checkoutForm.removeAttribute('aria-busy');
+    checkoutModal.showModal();
+    document.body.style.overflow = 'hidden';
+    coName.focus();
+  }
+
+  function closeCheckout() {
+    checkoutModal.close();
+  }
+
+  // Handle close — fires on explicit .close() call and ESC
+  checkoutModal.addEventListener('close', () => {
+    document.body.style.overflow = '';
+    // Reopen cart drawer when checkout closes without submitting
+    if (submitState !== 'success') {
+      openCartDrawer();
+    }
+  });
+  // Safari fallback: 'cancel' fires on ESC even if 'close' does not
+  checkoutModal.addEventListener('cancel', () => {
+    document.body.style.overflow = '';
+    if (submitState !== 'success') {
+      openCartDrawer();
+    }
+  });
+
+  checkoutModalClose.addEventListener('click', closeCheckout);
+  checkoutForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    submitOrder();
+  });
 
   // Initialize drawer module
   initCartDrawer();
