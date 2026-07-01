@@ -831,6 +831,55 @@
     </footer>
   </dialog>
 
+  <!-- ========== CHECKOUT MODAL ========== -->
+  <dialog class="checkout-modal" id="checkoutModal" aria-label="Finalizar pedido">
+    <div class="checkout-modal__inner">
+      <header class="checkout-modal__head">
+        <h2 class="checkout-modal__title">Finalizar pedido</h2>
+        <button class="checkout-modal__close" id="checkoutModalClose" aria-label="Cerrar">×</button>
+      </header>
+
+      <div class="checkout-summary" id="checkoutSummary" aria-label="Resumen del pedido"></div>
+
+      <form class="checkout-form" id="checkoutForm" novalidate>
+        <div class="checkout-form__field">
+          <label for="coName">Nombre completo</label>
+          <input type="text" id="coName" name="customer.name" autocomplete="name" placeholder="Ej. María López" />
+          <p class="form-err" id="coNameErr" hidden aria-live="polite"></p>
+        </div>
+        <div class="checkout-form__field">
+          <label for="coPhone">Teléfono</label>
+          <input type="tel" id="coPhone" name="customer.phone" autocomplete="tel" placeholder="Ej. 5512345678" />
+          <p class="form-err" id="coPhoneErr" hidden aria-live="polite"></p>
+        </div>
+        <div class="checkout-form__field">
+          <label for="coAddress">Dirección de entrega</label>
+          <input type="text" id="coAddress" name="customer.address" autocomplete="street-address" placeholder="Ej. Av. Insurgentes 100, Col. Roma" />
+          <p class="form-err" id="coAddressErr" hidden aria-live="polite"></p>
+        </div>
+        <div class="checkout-form__field">
+          <label for="coNotes">Notas del pedido <span class="checkout-form__optional">(opcional)</span></label>
+          <textarea id="coNotes" name="customer.notes" rows="2" placeholder="Ej. Sin cebolla, agregar kétchup extra..."></textarea>
+          <p class="form-err" id="coNotesErr" hidden aria-live="polite"></p>
+        </div>
+
+        <div class="checkout-form__error" id="checkoutFormError" hidden aria-live="assertive"></div>
+
+        <button type="submit" class="btn btn--primary checkout-form__submit" id="checkoutSubmitBtn">
+          Confirmar pedido
+        </button>
+      </form>
+
+      <div class="checkout-success" id="checkoutSuccess" hidden>
+        <div class="checkout-success__icon" aria-hidden="true">✓</div>
+        <h3 class="checkout-success__title">¡Pedido confirmado!</h3>
+        <p class="checkout-success__body">Tu pedido <strong id="checkoutOrderId"></strong> fue recibido.</p>
+        <!-- PR 4 will replace the placeholder below with a real wa.me link -->
+        <p class="checkout-success__wa-placeholder">(Enviar por WhatsApp — disponible en la próxima actualización)</p>
+      </div>
+    </div>
+  </dialog>
+
   <script src="app.js" defer></script>
 </body>
 </html>
