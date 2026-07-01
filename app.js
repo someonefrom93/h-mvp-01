@@ -289,6 +289,18 @@
   // ----- Cart drawer -----
   let drawerUnsubscribe = null;
 
+  // Cart drawer DOM refs — declared together at the top of the module so the
+  // event listener below (line ~316) and every function in this module can
+  // reference them safely. Without these `const` declarations, the IIFE's
+  // strict mode throws `ReferenceError` at runtime, and the cart icon click
+  // crashes silently with "Cannot read properties of undefined".
+  const cartDrawer = $('#cartDrawer');
+  const cartDrawerClose = $('#cartDrawerClose');
+  const cartDrawerBody = $('#cartDrawerBody');
+  const cartDrawerSubtotal = $('#cartDrawerSubtotal');
+  const cartDrawerCheckout = $('#cartDrawerCheckout');
+  const cartDrawerClear = $('#cartDrawerClear');
+
   function openCartDrawer() {
     cartDrawer.showModal();
     document.body.style.overflow = 'hidden';
@@ -388,9 +400,6 @@
       openCartDrawer();
     });
   }
-
-  // Cart drawer DOM refs
-  const cartDrawerClear = $('#cartDrawerClear');
 
   // ----- Checkout modal -----
   const checkoutModal = $('#checkoutModal');
