@@ -203,6 +203,7 @@
     btn.addEventListener('click', () => {
       const product = DATA_PRODUCTS.find(p => p.id === productId);
       if (product) CartStore.add(product);
+      openCartDrawer(); // PR 2b: open drawer after adding
     });
     // Append button after the price span inside card__body
     const priceSpan = card.querySelector('.card__price');
@@ -291,4 +292,100 @@
       tabs[idx].focus();
     });
   }
+
+  // ----- Cart drawer -----
+  let drawerUnsubscribe = null;
+
+  function openCartDrawer() {
+    cartDrawer.showModal();
+    document.body.style.overflow = 'hidden';
+    // Render immediately so drawer shows current cart state on open
+    renderCartDrawer();
+    // Subscribe to CartStore — re-render on any cart mutation
+    drawerUnsubscribe = CartStore.subscribe(renderCartDrawer);
+  }
+
+  function closeCartDrawer() {
+    cartDrawer.close();
+  }
+
+  // Handle close event — fires on both explicit .close() call AND ESC key
+  cartDrawer.addEventListener('close', () => {
+    document.body.style.overflow = '';
+    if (drawerUnsubscribe) { drawerUnsubscribe(); drawerUnsubscribe = null; }
+  });
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function renderCartDrawer() {
+    const items = CartStore.getItems();
+    if (items.length === 0) {
+      cartDrawerBody.innerHTML = '<p class="cart-drawer__empty">Tu carrito está vacío</p>';
+      cartDrawerCheckout.disabled = true;
+    } else {
+      cartDrawerBody.innerHTML = items.map(item => `
+        <article class="cart-row" data-id="${escapeHtml(item.id)}">
+          <div class="cart-row__info">
+            <h3 class="cart-row__name">${escapeHtml(item.name)}</h3>
+            <span class="cart-row__price">$${item.unit_price}</span>
+          </div>
+          <div class="cart-row__qty">
+            <button class="cart-row__btn" data-action="dec" aria-label="Restar uno">−</button>
+            <span class="cart-row__qty-value">${item.quantity}</span>
+            <button class="cart-row__btn" data-action="inc" aria-label="Sumar uno">+</button>
+            <button class="cart-row__btn cart-row__btn--remove" data-action="remove" aria-label="Quitar del carrito">×</button>
+          </div>
+          <div class="cart-row__line-total">$${(item.unit_price * item.quantity).toFixed(0)}</div>
+        </article>
+      `).join('');
+      cartDrawerCheckout.disabled = false;
+    }
+    cartDrawerSubtotal.textContent = `$${CartStore.subtotal().toFixed(0)}`;
+  }
+
+  function initCartDrawer() {
+    // Wire close button
+    cartDrawerClose.addEventListener('click', closeCartDrawer);
+
+    // Wire "Ir a pagar" stub — PR 3 wires the real checkout
+    cartDrawerCheckout.addEventListener('click', () => {
+      console.info('[PR2b] checkout stub — PR 3 will wire this');
+    });
+
+    // Event delegation for quantity controls in drawer body
+    cartDrawerBody.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const row = btn.closest('[data-id]');
+      if (!row) return;
+      const id = row.dataset.id;
+      if (btn.dataset.action === 'inc') {
+        const item = CartStore.getItems().find(i => i.id === id);
+        if (item) CartStore.setQty(id, item.quantity + 1);
+      } else if (btn.dataset.action === 'dec') {
+        const item = CartStore.getItems().find(i => i.id === id);
+        if (item) CartStore.setQty(id, item.quantity - 1);
+      } else if (btn.dataset.action === 'remove') {
+        CartStore.remove(id);
+      }
+    });
+  }
+
+  // Wire cart icon in nav to open drawer
+  const cartBtn = $('.btn--cart');
+  if (cartBtn) {
+    cartBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openCartDrawer();
+    });
+  }
+
+  // Initialize drawer module
+  initCartDrawer();
 })();
