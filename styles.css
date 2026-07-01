@@ -841,9 +841,9 @@ ul { list-style: none; padding: 0; margin: 0; }
   padding: 0;
   background: var(--bk-cream);
   z-index: 300;
-  display: flex;
   flex-direction: column;
 }
+.checkout-modal[open] { display: flex; }
 .checkout-modal::backdrop { background: rgba(40, 20, 10, .6); }
 
 .checkout-modal__inner { display: flex; flex-direction: column; height: 100%; overflow: hidden; }
