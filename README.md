@@ -1,4 +1,4 @@
-# Burger King® México — Front-end Clone
+# Burgers — Front-end Clone
 
 Static HTML/CSS/JS implementation of the [Burger King México homepage](#) layout from the reference screenshot.
 **No build step, no framework, no dependencies beyond a browser.**
